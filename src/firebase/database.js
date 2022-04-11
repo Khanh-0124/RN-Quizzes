@@ -6,3 +6,14 @@ export const createQuiz = (currentQuizId, title, description) => {
     description,
   });
 };
+
+/* create new question for current quiz */
+export const createQuestion = (currentQuizId, currentQuestionId, question) => {
+  setDoc(
+    doc(db, "Quizzes", currentQuizId),
+    (doc(db, "QNA", currentQuestionId),
+    {
+      question,
+    })
+  );
+};

@@ -34,6 +34,16 @@ const CreateQuizScreen = ({ navigation }) => {
         value={description}
       />
       <FormButton labelText="Lưu Quiz" handleOnPress={handleQuizSave} />
+      {/* temporary button - navigate without saving quizz  */}
+      <FormButton
+        labelText="chuyển sang add screen"
+        handleOnPress={() => {
+          navigation.navigate("AddQuestionScreen", {
+            currentQuizId: "104435",
+            currentQuizTitle: "test quizz",
+          });
+        }}
+      />
     </SafeAreaView>
   );
 };

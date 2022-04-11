@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ToastAndroid,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { COLORS } from "../constants/theme";
@@ -56,7 +57,9 @@ const SignUpScreen = ({ navigation }) => {
             // Signed in
             const user = userCredential.user;
             setPin(false);
-            Alert.alert("Đăng kí thành công");
+            Alert.alert("Thông báo", "🎉Đăng kí thành công🤩", [
+              { text: "OK" },
+            ]);
             console.log(user.email);
             // ...
           })
@@ -68,10 +71,18 @@ const SignUpScreen = ({ navigation }) => {
             // ..
           });
       } else {
-        Alert.alert("Mật khẩu không khớp");
+        ToastAndroid.showWithGravity(
+          `Mật khẩu không khớp 😪`,
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER
+        );
       }
     } else {
-      Alert.alert("Bạn phải nhập đầy đủ thông tin");
+      ToastAndroid.showWithGravity(
+        `Bạn chưa nhập đầy đủ thông tin 😟`,
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER
+      );
     }
   };
   return (

@@ -17,8 +17,8 @@ const FormInput = (props) => {
       <TextInput
         style={styles.textInput}
         placeholder={placeholderText}
-        onChangeText={onChangeText}
         value={value}
+        onChangeText={onChangeText}
         {...more}
       />
     </View>

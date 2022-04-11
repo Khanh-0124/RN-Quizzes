@@ -8,7 +8,6 @@ import AppStackNavigation from "./src/navigators/AppStackNavigation";
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(isLoading);
 
   const f_onAuthStateChanged = async (user) => {
     await setCurrentUser(user);
@@ -17,7 +16,7 @@ export default function App() {
   useEffect(() => {
     const subscriber = onAuthStateChanged(auth, f_onAuthStateChanged);
     return subscriber;
-  });
+  }, []);
   if (isLoading) return null;
   return (
     <NavigationContainer>

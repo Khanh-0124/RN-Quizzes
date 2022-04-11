@@ -6,17 +6,16 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ToastAndroid,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import { COLORS } from "../constants/theme";
-import FormInput from "../components/shared/FormInput";
 import { Ionicons } from "@expo/vector-icons";
-import FormButton from "../components/shared/FormButton";
 import { auth } from "../firebase/firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { FormInput, FormButton, FormModal } from "../components/shared/index";
 
 const SignInScreen = ({ navigation }) => {
-  // const emailRef = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(true);
@@ -33,7 +32,7 @@ const SignInScreen = ({ navigation }) => {
       }
     });
     return unsubscribe;
-  });
+  }, []);
 
   const showPassword = () => {
     setShowPass(!showPass);
@@ -55,17 +54,25 @@ const SignInScreen = ({ navigation }) => {
           // Signed in
           const user = userCredential.user;
           setPin(false);
-          console.log("logined with: ", user.email);
           // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setPin(false);
-          Alert.alert("Tài khoản hoặc mật khẩu sai!");
+          ToastAndroid.showWithGravity(
+            `Email hoặc mật khẩu không đúng ${errorCode}`,
+            ToastAndroid.LONG,
+            ToastAndroid.CENTER
+          );
         });
     } else {
-      Alert.alert("Bạn phải nhập đủ thông tin");
+      // <FormModal />;
+      ToastAndroid.showWithGravity(
+        `Bạn chưa nhập đầy đủ thông tin 😟`,
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER
+      );
     }
   };
 
@@ -136,7 +143,6 @@ const SignInScreen = ({ navigation }) => {
           style={{ width: 110, justifyContent: "center", alignItems: "center" }}
         />
       )}
-
       {/* Footer */}
       <View style={{ flexDirection: "row", marginTop: 20 }}>
         <TouchableOpacity

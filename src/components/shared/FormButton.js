@@ -15,12 +15,19 @@ const FormButton = (props) => {
       style={[
         styles.button,
         {
-          backgroundColor: isPrimary ? COLORS.primary : COLORS.black,
+          backgroundColor: isPrimary ? COLORS.primary : COLORS.black + "10",
           ...style,
         },
       ]}
     >
-      <Text style={styles.text}>{labelText}</Text>
+      <Text
+        style={[
+          styles.text,
+          { color: isPrimary ? COLORS.white : COLORS.black },
+        ]}
+      >
+        {labelText}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -36,7 +43,6 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
   },
   text: {
-    color: COLORS.white,
     fontWeight: "700",
     textAlign: "center",
   },

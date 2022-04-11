@@ -4,14 +4,34 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  ActivityIndicator,
+  Button,
+  Platform,
+  Image,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import FormButton from "../components/shared/FormButton";
 import { auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
+import * as ImagePicker from "expo-image-picker";
 
 const HomeScreen = ({ navigation }) => {
+  const [image, setImage] = useState(null);
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [16, 9],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
   const handleSignOut = () => {
     signOut(auth).then(() => {
       navigation.replace("SignInScreen");
@@ -37,6 +57,11 @@ const HomeScreen = ({ navigation }) => {
           navigation.navigate("CreateQuizScreen");
         }}
       />
+
+      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      {image && (
+        <Image source={{ uri: image }} style={{ width: 400, height: 200 }} />
+      )}
     </SafeAreaView>
   );
 };
